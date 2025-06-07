@@ -139,3 +139,51 @@ export const getCourseById = async (req: Request, res: Response) => {
     }
 }
 
+export const getAdminProfile = async (req: Request, res: Response) => {
+    try {
+        const admin = await AdminModel.findById(req.adminId).select('-password');
+        if (!admin) {
+            return res.status(404).json({ message: 'Admin not found' });
+        }
+        return res.status(200).json(admin);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+
+export const getPurchasedCourses = async (req: Request, res: Response) => {
+    try {
+        const purchasedCourses = await CourseModel.find({ purchasedBy: req.adminId }).populate('createdBy', 'name email');
+        if (!purchasedCourses || purchasedCourses.length === 0) {
+            return res.status(404).json({ message: 'No purchased courses found' });
+        }
+        return res.status(200).json(purchasedCourses);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}   
+
+
+export const getAdminDashboard = async (req: Request, res: Response) => {
+    try {
+        const totalCourses = await CourseModel.countDocuments();
+        const totalAdmins = await AdminModel.countDocuments();
+        const totalUsers = await AdminModel.countDocuments({ role: 'user' }); // Assuming 'user' is a role in your Admin model
+        const totalRevenue = await CourseModel.aggregate([
+            { $group: { _id: null, total: { $sum: '$price' } } }
+        ]);
+
+        return res.status(200).json({
+            totalCourses,
+            totalAdmins,
+            totalUsers,
+            totalRevenue: totalRevenue[0]?.total || 0
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}

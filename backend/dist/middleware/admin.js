@@ -12,20 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
-const mongoose_1 = __importDefault(require("mongoose"));
-const app = (0, express_1.default)();
-const user_1 = __importDefault(require("./routes/user"));
-app.use(express_1.default.json());
-app.use((0, cors_1.default)());
-app.use("/api/v1/user", user_1.default);
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield mongoose_1.default.connect("mongodb://localhost:27017/LMS");
-        app.listen(3000, () => {
-            console.log('Server is running on port 3000');
-        });
-    });
-}
-main();
+exports.adminMiddleware = void 0;
+const config_1 = require("../config");
+const admin_1 = __importDefault(require("../models/admin"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const adminMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const token = req.headers.token;
+        const decoded = jsonwebtoken_1.default.verify(token, config_1.JWT_ADMIN_SECRET);
+        const admin = yield admin_1.default.findById(decoded.id);
+        if (!admin || admin.role !== 'admin') {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        req.adminId = decoded.id;
+        next();
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+});
+exports.adminMiddleware = adminMiddleware;

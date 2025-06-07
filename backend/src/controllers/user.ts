@@ -16,7 +16,7 @@ export const signup = async (req: Request, res: Response) => {
     });
 
     if (!requringSchema.safeParse(req.body).success) {
-         res.status(400).json({ message: 'Invalid input' });
+         return res.status(400).json({ message: 'Invalid input' });
     }
 
     try {
