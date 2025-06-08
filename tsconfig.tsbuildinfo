@@ -1,0 +1,1 @@
+{"root":["./src/config.ts","./src/index.ts","./src/ovveride.d.ts","./src/controllers/admin.ts","./src/controllers/user.ts","./src/middleware/admin.ts","./src/middleware/user.ts","./src/models/admin.ts","./src/models/course.ts","./src/models/enroll.ts","./src/models/user.ts","./src/routes/admin.ts","./src/routes/user.ts"],"version":"5.8.3"}
