@@ -101,10 +101,11 @@ exports.updateProfile = updateProfile;
 const getPurchases = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userId = req.userId;
-        const purchases = yield enroll_1.default.find({ userId }).populate('courseId');
+        const purchases = yield enroll_1.default.find({ user: userId }).populate('course');
         return res.status(200).json(purchases);
     }
-    catch (_a) {
+    catch (error) {
+        console.error(error);
         return res.status(500).json({ message: 'Internal server error' });
     }
 });

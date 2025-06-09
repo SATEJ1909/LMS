@@ -18,4 +18,6 @@ AdminRouter.get("/dashboard", admin_2.adminMiddleware, admin_1.getAdminDashboard
 AdminRouter.get("/course/:id", admin_2.adminMiddleware, admin_1.getCourseById);
 //@ts-ignore
 AdminRouter.get("/courses", admin_2.adminMiddleware, admin_1.getCourses);
+//@ts-ignore
+AdminRouter.get("/profile", admin_2.adminMiddleware, admin_1.getAdminProfile);
 exports.default = AdminRouter;

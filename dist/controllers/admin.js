@@ -101,9 +101,9 @@ const getCourses = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.getCourses = getCourses;
 const updateCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { courseId } = req.params;
+        const { id } = req.params;
         const { title, description, thumbnail, price, content } = req.body;
-        const course = yield course_1.default.findByIdAndUpdate(courseId, { title, description, thumbnail, price, content }, { new: true }).populate('createdBy', 'name email');
+        const course = yield course_1.default.findByIdAndUpdate(id, { title, description, thumbnail, price, content }, { new: true }).populate('createdBy', 'name email');
         if (!course) {
             return res.status(404).json({ message: 'Course not found' });
         }
@@ -117,8 +117,8 @@ const updateCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.updateCourse = updateCourse;
 const deleteCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { courseId } = req.params;
-        const course = yield course_1.default.findByIdAndDelete(courseId);
+        const { id } = req.params;
+        const course = yield course_1.default.findByIdAndDelete(id);
         if (!course) {
             return res.status(404).json({ message: 'Course not found' });
         }
@@ -132,8 +132,8 @@ const deleteCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.deleteCourse = deleteCourse;
 const getCourseById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { courseId } = req.params;
-        const course = yield course_1.default.findById(courseId).populate('createdBy', 'name email');
+        const { id } = req.params;
+        const course = yield course_1.default.findById(id).populate('createdBy', 'name email');
         if (!course) {
             return res.status(404).json({ message: 'Course not found' });
         }

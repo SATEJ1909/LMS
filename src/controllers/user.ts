@@ -94,15 +94,16 @@ export const updateProfile = async (req: Request, res: Response) => {
 
 
 export const getPurchases = async (req: Request, res: Response) => {
-    try{
-        const userId =  req.userId;
-        const purchases = await EnrollmentModel.find({ userId }).populate('courseId');
+    try {
+        const userId = req.userId;
+        const purchases = await EnrollmentModel.find({ user: userId }).populate('course');
         return res.status(200).json(purchases);
-    }catch{
-       
+    } catch (error) {
+        console.error(error);
         return res.status(500).json({ message: 'Internal server error' });
     }
 }
+
 
 export const purchaseCourse = async (req: Request, res: Response) => {
     try {

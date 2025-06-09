@@ -1,4 +1,4 @@
-import { signup  , signin , createCourse , updateCourse , getAdminDashboard , getCourseById , getCourses , } from "../controllers/admin";
+import { signup  , signin , createCourse , updateCourse , getAdminDashboard , getCourseById , getCourses , getAdminProfile, } from "../controllers/admin";
 import AdminModel from "../models/admin";
 import { adminMiddleware } from "../middleware/admin";
 import { Router } from "express";
@@ -18,5 +18,7 @@ AdminRouter.get("/dashboard" , adminMiddleware , getAdminDashboard);
 AdminRouter.get("/course/:id" , adminMiddleware , getCourseById);
 //@ts-ignore
 AdminRouter.get("/courses" , adminMiddleware , getCourses);
+//@ts-ignore
+AdminRouter.get("/profile" , adminMiddleware , getAdminProfile);
 
 export default AdminRouter;

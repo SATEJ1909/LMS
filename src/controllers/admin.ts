@@ -92,10 +92,10 @@ export const getCourses = async (req: Request, res: Response) => {
 
 export const updateCourse = async (req: Request, res: Response) => {
     try {
-        const { courseId } = req.params;
+        const { id } = req.params;
         const { title, description, thumbnail, price, content } = req.body;
         const course = await CourseModel.findByIdAndUpdate(
-            courseId,   
+             id,   
             { title, description, thumbnail, price, content },
             { new: true }
         ).populate('createdBy', 'name email');  
@@ -112,8 +112,8 @@ export const updateCourse = async (req: Request, res: Response) => {
 
 export const deleteCourse = async(req: Request, res: Response) => {
     try {
-        const  { courseId } = req.params;
-        const course = await CourseModel.findByIdAndDelete(courseId);
+        const  { id } = req.params;
+        const course = await CourseModel.findByIdAndDelete( id);
         if (!course) {
             return res.status(404).json({ message: 'Course not found' });
         }
@@ -127,8 +127,8 @@ export const deleteCourse = async(req: Request, res: Response) => {
 
 export const getCourseById = async (req: Request, res: Response) => {
     try {
-        const { courseId } = req.params;
-        const course = await CourseModel.findById(courseId).populate('createdBy', 'name email');
+        const { id } = req.params;
+        const course = await CourseModel.findById( id ).populate('createdBy', 'name email');
         if (!course) {
             return res.status(404).json({ message: 'Course not found' });
         }
