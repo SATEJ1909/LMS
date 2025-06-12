@@ -17,9 +17,11 @@ const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const app = (0, express_1.default)();
 const user_1 = __importDefault(require("./routes/user"));
+const admin_1 = __importDefault(require("./routes/admin"));
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use("/api/v1/user", user_1.default);
+app.use("/api/v1/admin", admin_1.default);
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         yield mongoose_1.default.connect("mongodb://localhost:27017/LMS");
