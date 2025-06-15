@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const SignUp = () => {
@@ -8,6 +9,8 @@ const SignUp = () => {
     password: "",
     role: "user", // default role
   });
+
+  const navigate = useNavigate();
 
   const [message, setMessage] = useState("");
 
@@ -20,9 +23,10 @@ const SignUp = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/signup", formData);
+      const response = await axios.post("http://localhost:3000/api/v1/user/signup", formData);
       setMessage(response.data.message);
       setFormData({ name: "", email: "", password: "", role: "user" });
+      navigate("/signin");
     } catch (error: any) {
       setMessage(error.response?.data?.message || "Something went wrong");
     }

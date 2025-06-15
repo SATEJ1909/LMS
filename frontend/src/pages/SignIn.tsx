@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { use, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -13,7 +17,21 @@ const SignIn = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("SignIn data:", formData);
-    // send data to backend
+    try {
+      axios.post("http://localhost:3000/api/v1/user/signin", formData)
+        .then(response => {
+          console.log("Sign in successful:", response.data);
+          localStorage.setItem("user", JSON.stringify(response.data));
+          navigate("/courses"); // Redirect to dashboard
+        })
+        .catch(error => {
+          console.error("Error signing in:", error.response?.data || error.message);
+          alert("Sign in failed. Please check your credentials.");
+        });
+    } catch (error) {
+      console.error("Error during sign in:", error);
+      
+    }
   };
 
   return (
