@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import axios from "axios";
 
 interface User {
   name: string;
@@ -9,17 +10,36 @@ interface User {
   role: "user" | "admin";
 }
 
+
+
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("lmsUser");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+    const fetchProfile = async () => {
+      const token = localStorage.getItem("lmsToken"); // stored during sign-in
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const res = await axios.get("http://localhost:3000/api/v1/user/profile", {
+          headers: {
+            Authorization: localStorage.getItem("lmsToken") || ""
+          },
+        });
+        setUser(res.data);
+      } catch (error) {
+        console.error("Failed to fetch profile", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
   }, []);
 
   if (loading) return null;

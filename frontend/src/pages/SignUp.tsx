@@ -7,7 +7,7 @@ const SignUp = () => {
     name: "",
     email: "",
     password: "",
-    role: "user", // default role
+    role: "user", 
   });
 
   const navigate = useNavigate();

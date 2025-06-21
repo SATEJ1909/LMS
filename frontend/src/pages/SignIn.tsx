@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -21,16 +21,21 @@ const SignIn = () => {
       axios.post("http://localhost:3000/api/v1/user/signin", formData)
         .then(response => {
           console.log("Sign in successful:", response.data);
-          localStorage.setItem("user", JSON.stringify(response.data));
-          navigate("/courses"); // Redirect to dashboard
+
+
+          localStorage.setItem("lmsToken", response.data.token);
+
+
+          navigate("/profile");
         })
         .catch(error => {
           console.error("Error signing in:", error.response?.data || error.message);
           alert("Sign in failed. Please check your credentials.");
         });
+
     } catch (error) {
       console.error("Error during sign in:", error);
-      
+
     }
   };
 
