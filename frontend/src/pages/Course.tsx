@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect , useState } from "react";
 
 const [courses, setCourses] = useState([]);
 
@@ -27,7 +27,7 @@ const Courses = () => {
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           
-          ))}
+  
         </div>
       </div>
     </div>
