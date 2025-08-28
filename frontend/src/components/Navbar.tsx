@@ -1,49 +1,45 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const [user, setUser] = useState<{ role?: string; name?: string } | null>(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) setUser(JSON.parse(storedUser));
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-    navigate("/signin");
-  };
-
   return (
-    <nav className="bg-blue-950 text-white px-6 py-4 flex justify-between items-center shadow-lg">
-      <Link to="/" className="text-2xl font-extrabold text-blue-400 tracking-wide">
-        LMS
-      </Link>
-
-      <div className="space-x-6 text-md font-medium">
-        <Link to="/" className="hover:text-blue-300 transition">Home</Link>
-        <Link to="/courses" className="hover:text-blue-300 transition">Courses</Link>
-
-        {user?.role === "admin" && (
-          <>
-            <Link to="/dashboard" className="hover:text-blue-300 transition">Dashboard</Link>
-            <Link to="/admin/create-course" className="hover:text-blue-300 transition">Create Course</Link>
-          </>
-        )}
-
-        {user ? (
-          <>
-            <Link to="/profile" className="hover:text-blue-300 transition">Profile</Link>
-            <button onClick={handleLogout} className="hover:text-red-400 transition">Logout</button>
-          </>
-        ) : (
-          <>
-            <Link to="/signup" className="hover:text-blue-300 transition">Sign Up</Link>
-            <Link to="/signin" className="hover:text-blue-300 transition">Sign In</Link>
-          </>
-        )}
+    <nav className="bg-blue-700 text-white shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
+        {/* Logo & Title */}
+        <Link to="/" className="flex items-center gap-2">
+          <svg
+            className="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 20l9-5-9-5-9 5 9 5z" />
+            <path d="M12 12V4" />
+          </svg>
+          <span className="text-2xl font-bold tracking-wide">LearnYard</span>
+        </Link>
+        {/* Navigation Links */}
+        <div className="flex items-center gap-6">
+          <Link
+            to="/courses"
+            className="hover:text-blue-200 transition font-medium"
+          >
+            Courses
+          </Link>
+          <Link
+            to="/login"
+            className="hover:text-blue-200 transition font-medium"
+          >
+            Login
+          </Link>
+          <Link
+            to="/signup"
+            className="bg-white text-blue-700 px-4 py-2 rounded-full font-semibold shadow hover:bg-blue-100 transition"
+          >
+            Sign Up
+          </Link>
+        </div>
       </div>
     </nav>
   );

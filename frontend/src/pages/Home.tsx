@@ -1,160 +1,113 @@
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import { useEffect, useState } from "react";
+import React from "react";
+
+const features = [
+  {
+    title: "Track Progress",
+    desc: "Monitor your learning journey with detailed analytics and reports.",
+    icon: (
+      <svg className="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m-7 4h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+      </svg>
+    ),
+  },
+  {
+    title: "Interactive Courses",
+    desc: "Engage with multimedia lessons and quizzes for effective learning.",
+    icon: (
+      <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M12 20l9-5-9-5-9 5 9 5z"/>
+        <path d="M12 12V4"/>
+      </svg>
+    ),
+  },
+  {
+    title: "Community Support",
+    desc: "Join a vibrant community of learners and get help anytime.",
+    icon: (
+      <svg className="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M17 20h5v-2a4 4 0 00-3-3.87"/>
+        <path d="M9 20H4v-2a4 4 0 013-3.87"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+    ),
+  },
+];
+
+const testimonials = [
+  {
+    name: "Amit S.",
+    text: "LMS made my learning so much easier! The interface is beautiful and intuitive.",
+    img: "https://randomuser.me/api/portraits/men/32.jpg",
+  },
+  {
+    name: "Priya K.",
+    text: "I love the progress tracking and the community support. Highly recommended!",
+    img: "https://randomuser.me/api/portraits/women/44.jpg",
+  },
+];
 
 const Home = () => {
-  const phrases = [
-    "Learn new skills",
-    "Upgrade your knowledge",
-    "Empower your future",
-  ];
-  const [text, setText] = useState("");
-  const [index, setIndex] = useState(0);
-  const [subIndex, setSubIndex] = useState(0);
-  const [forward, setForward] = useState(true);
-
-  useEffect(() => {
-    if (index === phrases.length) return;
-
-    const interval = setInterval(() => {
-      setText(phrases[index].slice(0, subIndex));
-
-      if (forward) {
-        if (subIndex < phrases[index].length) {
-          setSubIndex((prev) => prev + 1);
-        } else {
-          setForward(false);
-        }
-      } else {
-        if (subIndex > 0) {
-          setSubIndex((prev) => prev - 1);
-        } else {
-          setForward(true);
-          setIndex((prev) => (prev + 1) % phrases.length);
-        }
-      }
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, [index, subIndex, forward]);
-
   return (
-    <div className="w-full min-h-screen flex flex-col bg-white text-gray-900">
-      <Navbar />
-
+    <div className="bg-gradient-to-br from-blue-50 to-blue-200 min-h-screen">
       {/* Hero Section */}
-      <section className="h-screen flex flex-col justify-center items-center text-center px-4 bg-gradient-to-br from-white to-blue-100">
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-pulse">
-          Welcome to LMS
+      <section className="flex flex-col items-center justify-center py-20 px-4">
+        <h1 className="text-5xl font-extrabold text-blue-900 mb-4 text-center drop-shadow-lg">
+          Unlock Your Learning Potential
         </h1>
-        <p className="text-xl md:text-2xl text-blue-700 h-10 font-medium tracking-wide">
-          {text}<span className="animate-blink">|</span>
+        <p className="text-xl text-gray-700 mb-8 text-center max-w-2xl">
+          Discover a modern Learning Management System designed to empower students and educators. Interactive courses, progress tracking, and a supportive community—all in one place.
         </p>
-        <div className="mt-8 flex flex-col sm:flex-row gap-4">
-          <a
-            href="/signup"
-            className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 hover:shadow-xl transition duration-300"
-          >
-            Get Started
-          </a>
-          <a
-            href="/courses"
-            className="px-6 py-3 border-2 border-blue-600 text-blue-600 font-semibold rounded-full hover:bg-blue-600 hover:text-white transition duration-300"
-          >
-            Browse Courses
-          </a>
-        </div>
+        <a
+          href="/signup"
+          className="px-8 py-4 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition text-lg font-semibold"
+        >
+          Get Started Free
+        </a>
       </section>
 
       {/* Features Section */}
-      <section className="py-16 px-6 bg-blue-50 text-gray-900">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-8 text-blue-800">
-            Why Choose Our LMS?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-6 bg-white rounded-2xl shadow-md border border-blue-100">
-              <h3 className="text-xl font-semibold mb-2 text-blue-700">
-                Interactive Courses
-              </h3>
-              <p className="text-gray-600">
-                Engaging content with quizzes, videos, and real-world projects.
-              </p>
+      <section className="py-16 px-4 bg-white">
+        <h2 className="text-3xl font-bold text-center text-blue-800 mb-10">Features</h2>
+        <div className="flex flex-col md:flex-row justify-center gap-8 max-w-4xl mx-auto">
+          {features.map((f, idx) => (
+            <div key={idx} className="bg-blue-50 rounded-xl shadow-md p-8 flex flex-col items-center text-center hover:scale-105 transition">
+              {f.icon}
+              <h3 className="mt-4 text-xl font-semibold text-blue-700">{f.title}</h3>
+              <p className="mt-2 text-gray-600">{f.desc}</p>
             </div>
-            <div className="p-6 bg-white rounded-2xl shadow-md border border-blue-100">
-              <h3 className="text-xl font-semibold mb-2 text-blue-700">
-                Admin Dashboard
-              </h3>
-              <p className="text-gray-600">
-                Manage courses, users, and analytics with a powerful admin panel.
-              </p>
-            </div>
-            <div className="p-6 bg-white rounded-2xl shadow-md border border-blue-100">
-              <h3 className="text-xl font-semibold mb-2 text-blue-700">
-                Progress Tracking
-              </h3>
-              <p className="text-gray-600">
-                Track learning progress and certifications through your profile.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* Courses Overview Section */}
-      <section className="py-16 px-6 bg-blue-100 text-gray-900">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-8 text-blue-800">
-            Popular Courses
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-6 bg-white rounded-2xl shadow border border-blue-200">
-              <h3 className="text-xl font-semibold text-blue-700">
-                Full Stack Development
-              </h3>
-              <p className="mt-2 text-gray-600">
-                Master React, Node, MongoDB, and more.
-              </p>
+      {/* Testimonials Section */}
+      <section className="py-16 px-4 bg-gradient-to-r from-blue-100 to-blue-300">
+        <h2 className="text-3xl font-bold text-center text-blue-800 mb-10">What Our Users Say</h2>
+        <div className="flex flex-col md:flex-row justify-center gap-8 max-w-4xl mx-auto">
+          {testimonials.map((t, idx) => (
+            <div key={idx} className="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center text-center">
+              <img src={t.img} alt={t.name} className="w-16 h-16 rounded-full mb-4 shadow" />
+              <p className="text-gray-700 italic mb-2">"{t.text}"</p>
+              <span className="font-semibold text-blue-700">{t.name}</span>
             </div>
-            <div className="p-6 bg-white rounded-2xl shadow border border-blue-200">
-              <h3 className="text-xl font-semibold text-blue-700">
-                Data Structures & Algorithms
-              </h3>
-              <p className="mt-2 text-gray-600">
-                Crack coding interviews with in-depth DSA training.
-              </p>
-            </div>
-            <div className="p-6 bg-white rounded-2xl shadow border border-blue-200">
-              <h3 className="text-xl font-semibold text-blue-700">
-                Cloud & DevOps
-              </h3>
-              <p className="mt-2 text-gray-600">
-                Learn AWS, Docker, Kubernetes, and CI/CD pipelines.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-700 to-blue-900 text-center text-white">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-pulse">
-            Ready to start your learning journey?
-          </h2>
-          <p className="text-lg mb-6">
-            Join thousands of learners who trust our platform to skill up.
-          </p>
-          <a
-            href="/signup"
-            className="bg-white text-blue-700 font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-blue-100 transition duration-300"
-          >
-            Join Now
-          </a>
-        </div>
+      {/* Call to Action */}
+      <section className="py-16 px-4 flex flex-col items-center bg-blue-700">
+        <h2 className="text-3xl font-bold text-white mb-4">Ready to start learning?</h2>
+        <a
+          href="/signup"
+          className="px-8 py-4 bg-white text-blue-700 rounded-full shadow-lg hover:bg-blue-100 transition text-lg font-semibold"
+        >
+          Join Now
+        </a>
       </section>
 
-      <Footer />
+      {/* Footer */}
+      <footer className="py-6 text-center text-gray-600 bg-blue-50">
+        © {new Date().getFullYear()} LMS. All rights reserved.
+      </footer>
     </div>
   );
 };
